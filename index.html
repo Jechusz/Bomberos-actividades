@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Login de Bomberos</title>
+    <link rel="stylesheet" href="estilos.css">
+    <script>
+        function validarLogin() {
+            var rango = document.getElementById("rango").value;
+            if (rango === "Voluntario") {
+                window.location.href = "actividades.html?tipo=inscripcion";
+            } else {
+                window.location.href = "actividades.html?tipo=creacion";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Login de Bomberos</h1>
+        <form onsubmit="event.preventDefault(); validarLogin();">
+            <label for="rango">Rango:</label>
+            <select id="rango" name="rango" required>
+                <option value="Comandante">Comandante</option>
+                <option value="Capitán">Capitán</option>
+                <option value="Teniente">Teniente</option>
+                <option value="Voluntario">Voluntario</option>
+                <option value="Director">Director</option>
+            </select><br>
+            <button type="submit">Continuar</button>
+        </form>
+    </div>
+</body>
+</html>

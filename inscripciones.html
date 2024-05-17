@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Inscripciones de Actividades</title>
+    <link rel="stylesheet" href="estilos.css">
+    <script>
+        function cargarInscripciones() {
+            var actividades = JSON.parse(localStorage.getItem('actividades')) || [];
+            var listaInscripciones = document.getElementById("listaInscripciones");
+            actividades.forEach(actividad => {
+                var actividadTitulo = document.createElement("h3");
+                actividadTitulo.innerText = actividad.nombre;
+                listaInscripciones.appendChild(actividadTitulo);
+
+                if (actividad.inscritos.length > 0) {
+                    var ul = document.createElement("ul");
+                    actividad.inscritos.forEach(inscrito => {
+                        var li = document.createElement("li");
+                        li.innerText = inscrito;
+                        ul.appendChild(li);
+                    });
+                    listaInscripciones.appendChild(ul);
+                } else {
+                    var p = document.createElement("p");
+                    p.innerText = "No hay inscritos en esta actividad.";
+                    listaInscripciones.appendChild(p);
+                }
+            });
+        }
+
+        window.onload = cargarInscripciones;
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Inscripciones de Actividades</h1>
+        <div id="listaInscripciones">
+            <!-- La lista de inscripciones se cargará aquí -->
+        </div>
+        <a href="index.html">Volver al Login</a>
+    </div>
+</body>
+</html>
