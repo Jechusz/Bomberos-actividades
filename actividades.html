@@ -2,94 +2,52 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Actividades de Bomberos</title>
+    <title>Crear Actividad</title>
     <link rel="stylesheet" href="estilos.css">
     <script>
-        function obtenerTipoActividad() {
-            var urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('tipo');
-        }
-
-        function cargarActividades() {
-            var actividades = JSON.parse(localStorage.getItem('actividades')) || [];
-            var selectActividad = document.getElementById("actividad");
-            actividades.forEach(actividad => {
-                var option = document.createElement("option");
-                option.value = actividad.nombre;
-                option.text = actividad.nombre;
-                selectActividad.add(option);
-            });
-        }
-
         function guardarActividad() {
             var nombreActividad = document.getElementById("nombreActividad").value;
             var descripcion = document.getElementById("descripcion").value;
+
+            if (!nombreActividad || !descripcion) {
+                alert("Todos los campos son obligatorios");
+                return;
+            }
+
             var actividades = JSON.parse(localStorage.getItem('actividades')) || [];
             actividades.push({nombre: nombreActividad, descripcion: descripcion, inscritos: []});
             localStorage.setItem('actividades', JSON.stringify(actividades));
-            alert("Actividad creada con éxito!");
-        }
+            alert("¡Actividad creada con éxito!");
 
-        function inscribirActividad() {
-            var nombre = document.getElementById("nombre").value;
-            var actividad = document.getElementById("actividad").value;
-            var actividades = JSON.parse(localStorage.getItem('actividades')) || [];
-            var actividadObj = actividades.find(act => act.nombre === actividad);
-            actividadObj.inscritos.push(nombre);
-            localStorage.setItem('actividades', JSON.stringify(actividades));
-            alert("Inscripción realizada con éxito!");
+            // Mejorar la experiencia de usuario actualizando la UI sin recargar
+            document.getElementById("nombreActividad").value = '';
+            document.getElementById("descripcion").value = '';
         }
 
         window.onload = function() {
-            var tipoActividad = obtenerTipoActividad();
-            var titulo = document.getElementById("titulo");
-            var formularioCreacion = document.getElementById("formularioCreacion");
-            var formularioInscripcion = document.getElementById("formularioInscripcion");
-
-            if (tipoActividad === "creacion") {
-                titulo.innerText = "Crear Actividad";
-                formularioCreacion.style.display = "block";
-                formularioInscripcion.style.display = "none";
-                document.getElementById("crearBtn").onclick = guardarActividad;
-            } else {
-                titulo.innerText = "Inscribirse en Actividad";
-                formularioCreacion.style.display = "none";
-                formularioInscripcion.style.display = "block";
-                document.getElementById("inscribirBtn").onclick = inscribirActividad;
-                cargarActividades();
+            var rango = localStorage.getItem('rango');
+            if (rango === "Voluntario") {
+                alert("No tienes permiso para crear actividades.");
+                window.location.href = "inscribirseActividades.html";
             }
         }
     </script>
 </head>
 <body>
     <div class="container">
-        <h1 id="titulo">Actividades de Bomberos</h1>
-
-        <div id="formularioCreacion">
-            <h2>Crear Actividad</h2>
-            <form>
-                <label for="nombreActividad">Nombre de la Actividad:</label>
-                <input type="text" id="nombreActividad" name="nombreActividad" required><br>
-                <label for="descripcion">Descripción:</label>
-                <textarea id="descripcion" name="descripcion" required></textarea><br>
-                <button type="button" id="crearBtn">Crear Actividad</button>
-            </form>
-        </div>
-
-        <div id="formularioInscripcion">
-            <h2>Inscribirse en Actividad</h2>
-            <form>
-                <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" required><br>
-                <label for="actividad">Actividad:</label>
-                <select id="actividad" name="actividad" required>
-                    <!-- Options will be added dynamically -->
-                </select><br>
-                <button type="button" id="inscribirBtn">Inscribirse</button>
-            </form>
-        </div>
-
+        <h1>Crear Actividad</h1>
+        <form>
+            <label for="nombreActividad">Nombre de la Actividad</label>
+            <input type="text" id="nombreActividad" name="nombreActividad" required><br>
+            <label for="descripcion">Descripción</label>
+            <textarea id="descripcion" name="descripcion" required></textarea><br>
+            <button type="button" id="crearBtn" onclick="guardarActividad()">Crear Actividad</button>
+        </form>
+        <a href="inscribirseActividades.html">Inscribirse en Actividad</a>
         <a href="inscripciones.html">Ver Inscripciones</a>
+        <a href="modificarActividades.html">Modificar Actividades</a>
+        <a href="index.html">Volver al Inicio</a> <!-- Enlace añadido -->
+
     </div>
 </body>
 </html>

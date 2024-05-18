@@ -2,25 +2,26 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Login de Bomberos</title>
+    <title>3era Campanario</title>
     <link rel="stylesheet" href="estilos.css">
     <script>
         function validarLogin() {
             var rango = document.getElementById("rango").value;
-            if (rango === "Voluntario") {
-                window.location.href = "actividades.html?tipo=inscripcion";
-            } else {
-                window.location.href = "actividades.html?tipo=creacion";
+            if (!rango) {
+                alert("Por favor, selecciona un rango.");
+                return;
             }
+            localStorage.setItem('rango', rango); // Guardar el rango seleccionado
+            window.location.href = "actividades.html";
         }
     </script>
 </head>
 <body>
     <div class="container">
-        <h1>Login de Bomberos</h1>
+        <h1>Bomberos Campanario</h1>
         <form onsubmit="event.preventDefault(); validarLogin();">
-            <label for="rango">Rango:</label>
             <select id="rango" name="rango" required>
+                <option value="">Seleccione un cargo</option>
                 <option value="Comandante">Comandante</option>
                 <option value="Capitán">Capitán</option>
                 <option value="Teniente">Teniente</option>

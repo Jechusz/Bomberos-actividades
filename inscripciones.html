@@ -6,26 +6,38 @@
     <link rel="stylesheet" href="estilos.css">
     <script>
         function cargarInscripciones() {
+            var rango = localStorage.getItem('rango');
             var actividades = JSON.parse(localStorage.getItem('actividades')) || [];
             var listaInscripciones = document.getElementById("listaInscripciones");
+
+            if (rango === "Voluntario") {
+                listaInscripciones.innerHTML = "<p>No tienes permisos para ver las inscripciones.</p>";
+                return;
+            }
+
             actividades.forEach(actividad => {
+                var actividadDiv = document.createElement("div");
+                actividadDiv.classList.add("actividad");
+
                 var actividadTitulo = document.createElement("h3");
                 actividadTitulo.innerText = actividad.nombre;
-                listaInscripciones.appendChild(actividadTitulo);
+                actividadDiv.appendChild(actividadTitulo);
 
                 if (actividad.inscritos.length > 0) {
                     var ul = document.createElement("ul");
                     actividad.inscritos.forEach(inscrito => {
                         var li = document.createElement("li");
-                        li.innerText = inscrito;
+                        li.innerText = `${inscrito.nombre} ${inscrito.apellido} (${inscrito.rango}) - ${inscrito.fecha}`;
                         ul.appendChild(li);
                     });
-                    listaInscripciones.appendChild(ul);
+                    actividadDiv.appendChild(ul);
                 } else {
                     var p = document.createElement("p");
                     p.innerText = "No hay inscritos en esta actividad.";
-                    listaInscripciones.appendChild(p);
+                    actividadDiv.appendChild(p);
                 }
+
+                listaInscripciones.appendChild(actividadDiv);
             });
         }
 
@@ -38,7 +50,10 @@
         <div id="listaInscripciones">
             <!-- La lista de inscripciones se cargará aquí -->
         </div>
-        <a href="index.html">Volver al Login</a>
+        <a href="index.html">Volver al Inicio</a> <!-- Enlace añadido -->
+        <a href="modificarActividades.html">Modificar Actividades</a>
+
     </div>
 </body>
 </html>
+

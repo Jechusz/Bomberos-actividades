@@ -1,65 +1,69 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: grey;
     margin: 0;
     padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
 }
 
 .container {
-    width: 50%;
-    margin: 0 auto;
-    background: #fff;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-top: 50px;
+    width: 60%;
+    height: 70%;
+    background-image: url(img/bombero-trabaja-edificio-llamas-bombero-ia-generativa-fondo-llama_587448-2219.jpg);
+    padding: 60px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 1);
     border-radius: 8px;
+    background-size: cover;
+    background-position: center;
+    display: flex; /* Utilizando flexbox para centrar y organizar el contenido */
+    flex-direction: column; /* Organiza el contenido en una columna */
+    justify-content: center; /* Centra verticalmente el contenido */
+    align-items: center; /* Centra horizontalmente el contenido */
 }
 
+
 h1, h2 {
-    color: #333;
+    color: #000000;
+    text-shadow: 0 0 5px rgb(0, 162, 255);
 }
 
 form {
-    display: flex;
-    flex-direction: column;
+    width: 100%; /* Ajusta el formulario al ancho del contenedor */
+    max-width: 400px; /* Limita el ancho del formulario para mantenerlo legible */
+    color: rgb(0, 0, 0);
+    text-shadow: 0 0 5px rgb(0, 162, 255);
 }
 
-label {
-    margin: 10px 0 5px;
-}
-
-input[type="text"], textarea, select {
+input, textarea, select, button {
+    width: 100%;
     padding: 10px;
     margin-bottom: 10px;
-    border: 1px solid #ccc;
     border-radius: 4px;
+    border: 1px solid #ddd;
 }
 
 button {
-    padding: 10px 15px;
-    background-color: #007bff;
+    background: #007bff;
+    color: white;
     border: none;
-    color: #fff;
-    border-radius: 4px;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background: #0056b3;
 }
 
-#formularioCreacion, #formularioInscripcion {
-    display: none;
+a {
+    color: #000000;
+    text-decoration: none;
+    margin-top: 10px;
+    text-shadow: 0 0 5px rgb(0, 162, 255);
 }
 
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    background: #e9ecef;
-    margin: 5px 0;
-    padding: 10px;
-    border-radius: 4px;
+a:hover {
+    text-decoration: underline;
 }

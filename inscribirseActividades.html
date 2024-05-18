@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Inscribirse en Actividad</title>
+    <link rel="stylesheet" href="estilos.css">
+    <script>
+        function cargarActividades() {
+            var actividades = JSON.parse(localStorage.getItem('actividades')) || [];
+            var selectActividad = document.getElementById("actividad");
+            actividades.forEach(actividad => {
+                var option = document.createElement("option");
+                option.value = actividad.nombre;
+                option.text = actividad.nombre;
+                selectActividad.add(option);
+            });
+        }
+
+        function inscribirActividad() {
+            var nombre = document.getElementById("nombre").value;
+            var apellido = document.getElementById("apellido").value;
+            var fecha = document.getElementById("fecha").value;
+            var actividad = document.getElementById("actividad").value;
+
+            if (!nombre || !apellido || !fecha || !actividad) {
+                alert("Todos los campos son obligatorios");
+                return;
+            }
+
+            var rango = localStorage.getItem('rango');
+            var actividades = JSON.parse(localStorage.getItem('actividades')) || [];
+            var actividadObj = actividades.find(act => act.nombre === actividad);
+            actividadObj.inscritos.push({rango: rango, nombre: nombre, apellido: apellido, fecha: fecha});
+            localStorage.setItem('actividades', JSON.stringify(actividades));
+            alert("Inscripción realizada con éxito!");
+            location.reload();
+        }
+
+        window.onload = function() {
+            cargarActividades();
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Inscribirse en Actividad</h1>
+        <form>
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" required><br>
+            <label for="apellido">Apellido</label>
+            <input type="text" id="apellido" name="apellido" required><br>
+            <label for="fecha">Fecha de Inscripción</label>
+            <input type="date" id="fecha" name="fecha" required><br>
+            <label for="actividad">Actividad</label>
+            <select id="actividad" name="actividad" required>
+                <!-- Options will be added dynamically -->
+            </select><br>
+            <button type="button" id="inscribirBtn" onclick="inscribirActividad()">Inscribirse</button>
+        </form>
+        <a href="actividades.html">Ir a Crear Actividad</a>
+        <a href="inscripciones.html">Ver Inscripciones</a>
+        <a href="index.html">Volver al Inicio</a> <!-- Enlace añadido -->
+        <a href="modificarActividades.html">Modificar Actividades</a>
+
+    </div>
+</body>
+</html>

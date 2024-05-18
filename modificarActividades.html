@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Modificar Actividades</title>
+    <link rel="stylesheet" href="estilos.css">
+    <script>
+        function cargarActividades() {
+            var actividades = JSON.parse(localStorage.getItem('actividades')) || [];
+            var selectActividad = document.getElementById("actividad");
+            actividades.forEach(actividad => {
+                var option = document.createElement("option");
+                option.value = actividad.nombre;
+                option.text = actividad.nombre;
+                selectActividad.add(option);
+            });
+        }
+
+        function eliminarActividad() {
+            var actividadSeleccionada = document.getElementById("actividad").value;
+            var actividades = JSON.parse(localStorage.getItem('actividades')) || [];
+            var indice = actividades.findIndex(act => act.nombre === actividadSeleccionada);
+            if (indice !== -1) {
+                actividades.splice(indice, 1); // Eliminar la actividad del arreglo
+                localStorage.setItem('actividades', JSON.stringify(actividades)); // Actualizar el almacenamiento local
+                alert("Actividad eliminada con éxito.");
+                location.reload(); // Recargar la página para reflejar los cambios
+            } else {
+                alert("No se encontró la actividad seleccionada.");
+            }
+        }
+
+        function modificarActividad() {
+            var actividadSeleccionada = document.getElementById("actividad").value;
+            var nuevoNombre = prompt("Ingrese el nuevo nombre de la actividad:");
+            var nuevaDescripcion = prompt("Ingrese la nueva descripción de la actividad:");
+
+            if (nuevoNombre && nuevaDescripcion) {
+                var actividades = JSON.parse(localStorage.getItem('actividades')) || [];
+                var actividad = actividades.find(act => act.nombre === actividadSeleccionada);
+                if (actividad) {
+                    actividad.nombre = nuevoNombre;
+                    actividad.descripcion = nuevaDescripcion;
+                    localStorage.setItem('actividades', JSON.stringify(actividades)); // Actualizar el almacenamiento local
+                    alert("Actividad modificada con éxito.");
+                    location.reload(); // Recargar la página para reflejar los cambios
+                } else {
+                    alert("No se encontró la actividad seleccionada.");
+                }
+            } else {
+                alert("Debe ingresar un nuevo nombre y una nueva descripción.");
+            }
+        }
+
+        window.onload = function() {
+            var rango = localStorage.getItem('rango');
+            if (rango === "Voluntario") {
+                alert("No tienes permiso para modificar actividades.");
+                window.location.href = "index.html"; // Redirige al inicio si el usuario es voluntario
+            } else {
+                cargarActividades();
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Modificar Actividades</h1>
+        <form>
+            <label for="actividad">Seleccione la Actividad</label>
+            <select id="actividad" name="actividad" required>
+                <!-- Options will be added dynamically -->
+            </select><br>
+            <button type="button" onclick="eliminarActividad()">Eliminar Actividad</button>
+            <button type="button" onclick="modificarActividad()">Modificar Actividad</button>
+        </form>
+        <a href="index.html">Volver al Inicio</a>
+    </div>
+</body>
+</html>
